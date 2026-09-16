@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Agriculture Predictor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+    <!-- Chart.js inclusion -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    
+    <div class="blob-bg"></div>
+    <div class="blob-bg blob-2"></div>
+
+    <main class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-icon">
+                <i class="fa-solid fa-leaf"></i>
+            </div>
+            <div style="flex-grow: 1;">
+                <h1>AgriNet Predictor</h1>
+                <p>AI-Powered Crop Yield Estimation Dashboard</p>
+            </div>
+            
+            <nav class="nav-tabs">
+                <button id="nav-predict" class="tab-btn active"><i class="fa-solid fa-sliders"></i> Predictor</button>
+                <button id="nav-analytics" class="tab-btn"><i class="fa-solid fa-chart-pie"></i> Analytics</button>
+            </nav>
+        </header>
+
+        <!-- Predictor View -->
+        <section id="predictor-view" class="dashboard-content">
+            <!-- Left Side: Inputs -->
+            <div class="glass-panel input-panel">
+                <h2><i class="fa-solid fa-sliders"></i> Environmental Sensors</h2>
+                
+                <form id="prediction-form" class="sensors-grid">
+                    <div class="input-group">
+                        <label for="temp">Temperature (°C)</label>
+                        <input type="number" step="0.1" id="temp" value="25.0" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="hum">Humidity (%)</label>
+                        <input type="number" step="0.1" id="hum" value="60.0" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="ph">Soil pH</label>
+                        <input type="number" step="0.1" id="ph" value="6.5" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="rain">Rainfall (mm)</label>
+                        <input type="number" step="0.1" id="rain" value="100.0" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="nitro">Nitrogen (N)</label>
+                        <input type="number" step="0.1" id="nitro" value="50.0" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="phos">Phosphorus (P)</label>
+                        <input type="number" step="0.1" id="phos" value="40.0" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="pota">Potassium (K)</label>
+                        <input type="number" step="0.1" id="pota" value="30.0" required>
+                    </div>
+
+                    <button type="submit" class="predict-btn">
+                        <span>Analyze Yield</span>
+                        <i class="fa-solid fa-bolt"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Right Side: Results -->
+            <div class="glass-panel result-panel">
+                <h2><i class="fa-solid fa-chart-line"></i> Inference Engine</h2>
+                
+                <div class="result-display" id="result-container">
+                    <div class="waiting-state">
+                        <i class="fa-solid fa-satellite-dish pulse"></i>
+                        <p>Awaiting Telemetry</p>
+                    </div>
+                </div>
+
+                <div class="telemetry-info" id="telemetry-info" style="display: none;">
+                    <p><i class="fa-solid fa-microchip"></i> Model: <span>ONNX Runtime</span></p>
+                    <p><i class="fa-solid fa-stopwatch"></i> Latency: <span id="latency-val">0</span>ms</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analytics View (Hidden by default) -->
+        <section id="analytics-view" class="dashboard-content" style="display: none;">
+            <!-- Top Stat Cards -->
+            <div class="stats-row">
+                <div class="glass-panel stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-layer-group"></i></div>
+                    <div class="stat-info">
+                        <h3>Total Inferences</h3>
+                        <p id="stat-total">0</p>
+                    </div>
+                </div>
+                <div class="glass-panel stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #00ffa3, #00b8ff);"><i class="fa-solid fa-scale-balanced"></i></div>
+                    <div class="stat-info">
+                        <h3>Average Yield</h3>
+                        <p id="stat-avg">0.00 <span style="font-size: 14px;">t/ha</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Grid -->
+            <div class="charts-grid">
+                <div class="glass-panel chart-container">
+                    <h2>Prediction History</h2>
+                    <div style="position: relative; height: 300px; width: 100%;">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </div>
+                <div class="glass-panel chart-container">
+                    <h2>Yield vs Temperature</h2>
+                    <div style="position: relative; height: 300px; width: 100%;">
+                        <canvas id="scatterChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

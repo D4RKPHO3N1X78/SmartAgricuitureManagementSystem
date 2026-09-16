@@ -1,0 +1,24 @@
+artifact_path: /Users/macbook/Desktop/MLOPs/mlruns/1/models/m-d8d6fd822ff64a6e9d02786214765d25/artifacts
+flavors:
+  onnx:
+    code: null
+    data: model.onnx
+    onnx_session_options: null
+    onnx_version: 1.21.0
+    providers:
+    - CUDAExecutionProvider
+    - CPUExecutionProvider
+  python_function:
+    data: model.onnx
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.onnx
+    python_version: 3.14.4
+mlflow_version: 3.11.1
+model_id: m-d8d6fd822ff64a6e9d02786214765d25
+model_size_bytes: 4067
+model_uuid: m-d8d6fd822ff64a6e9d02786214765d25
+prompts: null
+run_id: 6fb34f02104d4d489d65c3dcaa5a4576
+utc_time_created: '2026-05-04 15:23:48.367255'
